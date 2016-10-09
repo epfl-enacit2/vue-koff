@@ -1,4 +1,4 @@
-# vkoff
+# vue-koff
 
 > A Vue.js project
 

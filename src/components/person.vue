@@ -21,29 +21,6 @@
 <script>
 export default{
   props: ['guy'],
-  data() {
-    return {
-      quote: ''
-    }
-  },
-  created(){
-    //http://quotes.stormconsultancy.co.uk/random.json
-    let self = this;
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://quotes.stormconsultancy.co.uk/random.json');
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      if(this.status == 200) {
-        //console.log(this.response);
-        self.quote = this.response['quote']
-      }
-    };
-    xhr.onerror = function() {
-      // error 
-    };
-
-    xhr.send();
-  },
   computed:{
     style(){
       return this.guy.isSelected ? 'title-zone selected': 'title-zone'
@@ -72,22 +49,13 @@ export default{
   color: #fff;
   background: bottom right 15% no-repeat #46B6AC;
 }
-.selected {
-   background-color: #65188F!important;
-}
+
 img {
     overflow: hidden;
     height: 150px;
     padding: 20px 20px 20px 20px;
 }
-.abus{
-  padding: 10px 5px 10px 5px;
-  background-color: #D61A1A!important;
-}
-.reglo{
-  padding: 10px 5px 10px 5px;
-  background-color: #8DC718;
-}
+
 .title-zone{
   min-height: 218.667px;
 }

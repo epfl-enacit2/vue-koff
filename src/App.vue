@@ -1,27 +1,32 @@
 <template>
-  <div id="app"" >
-    <div class="mdl-grid">
+  <div id="app" >
+    <div class="mdl-grid" v-if="screenSize > 400">
       <person v-for="person in sortedPeople" :guy="person" @pay="pay"></person>
     </div>
+    <table v-else>
+      <personrow v-for="person in sortedPeople" :guy="person" @pay="pay"></personrow>
+    </table>
   </div>
 </template>
 
 <script>
 import person from './components/person.vue'
+import personrow from './components/personrow.vue'
 
 export default {
-  components: { person },
+  components: { person, personrow },
   data () {
     return {
       people:[
-        {name: 'NiCrau', sciper: '262544', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Vitor', sciper: '269711', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: false},
-        {name: 'Mickael', sciper: '240312', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'André', sciper: '108332', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Nicdub', sciper: '167916', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Stefano', sciper: '150938', isSelected: false, counter: 0, consumed: 0, payed: 0, hasPhoto: true}
+        {name: 'NiCrau', sciper: '262544', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
+        {name: 'Vitor', sciper: '269711', isSelected: false, consumed: 0, payed: 0, hasPhoto: false},
+        {name: 'Mickael', sciper: '240312', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
+        {name: 'André', sciper: '108332', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
+        {name: 'Nicdub', sciper: '167916', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
+        {name: 'Stefano', sciper: '150938', isSelected: false, consumed: 0, payed: 0, hasPhoto: true}
       ],
-      koffPrice: 1.7
+      koffPrice: 1.7,
+      screenSize: window.innerWidth
     }
   },
   computed: {
@@ -57,6 +62,12 @@ export default {
     resetSeleted(){
       this.selectedPeople().map(x => x.isSelected = false)
     }
+  },
+  created () {
+    let self = this
+    window.onresize = () => {
+      self.screenSize = window.innerWidth
+    }
   }
 }
 </script>
@@ -64,5 +75,16 @@ export default {
 <style>
 body {
   font-family: Helvetica, sans-serif;
+}
+.abus{
+  padding: 10px 5px 10px 5px;
+  background-color: #D61A1A!important;
+}
+.reglo{
+  padding: 10px 5px 10px 5px;
+  background-color: #8DC718;
+}
+.selected {
+   background-color: #65188F!important;
 }
 </style>

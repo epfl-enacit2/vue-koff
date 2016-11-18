@@ -1,7 +1,7 @@
 <template>    
   <tr>
     <td @click="guy.isSelected = !guy.isSelected" :class="style">{{guy.name}}</td>
-    <td @click="guy.isSelected = !guy.isSelected" :class="balance">{{ guy.consumed.toFixed(2)}} / {{ guy.payed.toFixed(2) }}</td>
+    <td @click="guy.isSelected = !guy.isSelected" :class="balance">{{ guy.consumed}} / {{ guy.payed }}</td>
     <td><a :disabled="!guy.isSelected" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" @click="pay">Pay</a></td>
   </tr>
 </template>

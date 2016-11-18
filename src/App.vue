@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <div class="mdl-grid" v-if="screenSize > 400">
       <person v-for="person in sortedPeople" :guy="person" @pay="pay"></person>
     </div>
@@ -17,15 +17,7 @@ export default {
   components: { person, personrow },
   data () {
     return {
-      people:[
-        {name: 'NiCrau', sciper: '262544', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Vitor', sciper: '269711', isSelected: false, consumed: 0, payed: 0, hasPhoto: false},
-        {name: 'Mickael', sciper: '240312', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'André', sciper: '108332', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Nicdub', sciper: '167916', isSelected: false, consumed: 0, payed: 0, hasPhoto: true},
-        {name: 'Stefano', sciper: '150938', isSelected: false, consumed: 0, payed: 0, hasPhoto: true}
-      ],
-      koffPrice: 1.7,
+      people:[ ],
       screenSize: window.innerWidth
     }
   },
@@ -38,26 +30,29 @@ export default {
         } else if ((a.consumed - a.payed) < (b.consumed - b.payed)) {
                 sortStatus = 1;
         }
-        return sortStatus;         
+        return sortStatus;
       })
     }
   },
   methods:{
     pay(person){
       if(person.isSelected){
+        let self = this
         person.payed += this.sumToPay()
         this.consume()
         this.resetSeleted()
+
+        $.post( "http://localhost:3000/pay", { people: self.people });
       }
     },
     selectedPeople(){
       return this.people.filter((p)=> p.isSelected)
     },
     sumToPay(){
-      return this.selectedPeople().length * this.koffPrice
+      return this.selectedPeople().length
     },
     consume(){
-      this.selectedPeople().map(x => x.consumed += this.koffPrice)
+      this.selectedPeople().map(x => x.consumed++)
     },
     resetSeleted(){
       this.selectedPeople().map(x => x.isSelected = false)
@@ -68,23 +63,33 @@ export default {
     window.onresize = () => {
       self.screenSize = window.innerWidth
     }
+
+    $.getJSON( "http://localhost:3000/", function( data ) {
+      self.people = data.people.map(u => {
+        u.isSelected = false
+        return u
+      })
+    });
   }
 }
 </script>
 
 <style>
-body {
-  font-family: Helvetica, sans-serif;
-}
-.abus{
-  padding: 10px 5px 10px 5px;
-  background-color: #D61A1A!important;
-}
-.reglo{
-  padding: 10px 5px 10px 5px;
-  background-color: #8DC718;
-}
-.selected {
-   background-color: #65188F!important;
-}
+  body {
+    font-family: Helvetica, sans-serif;
+  }
+  
+  .abus {
+    padding: 10px 5px 10px 5px;
+    background-color: #D61A1A!important;
+  }
+  
+  .reglo {
+    padding: 10px 5px 10px 5px;
+    background-color: #8DC718;
+  }
+  
+  .selected {
+    background-color: #65188F!important;
+  }
 </style>

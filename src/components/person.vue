@@ -10,7 +10,7 @@
         </div>
       </div>
       <div :class="balance">
-        <div>Drinked/Payed: {{ guy.consumed.toFixed(2)}} / {{ guy.payed.toFixed(2) }}</div>
+        <div>Drinked/Payed: {{ guy.consumed}} / {{ guy.payed }}</div>
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <a :disabled="!guy.isSelected" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" @click="pay">Pay</a>
